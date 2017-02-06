@@ -1,0 +1,7 @@
+ - php5
+ - phpunit
+ - mongodb
+ - mongodb-clients
+ - mongodb-server
+ - libmongo-client-dev
+
