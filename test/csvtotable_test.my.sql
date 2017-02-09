@@ -15,8 +15,9 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-DROP DATABASE IF EXISTS `csvtotable_test`;
-CREATE DATABASE `csvtotable_test`;
+-- DROP DATABASE IF EXISTS `csvtotable_test`;
+-- CREATE DATABASE `csvtotable_test`;
+
 USE `csvtotable_test`;
 
 --

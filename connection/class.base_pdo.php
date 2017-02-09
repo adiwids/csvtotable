@@ -8,8 +8,8 @@ class BasePdo extends PDO {
 
   public function __construct($connection_string) {
     $this->uri = parse_url($connection_string);
-    $dns = sprintf("%s:host=%s;dbname=%s;charset=utf8", $this->uri['scheme'], $this->uri['host'], $this->getDBnameFromURI());
-    parent::__construct($dns, $this->uri['user'], $this->uri['pass']);
+    $dns = sprintf("%s:host=%s;dbname=%s", $this->uri['scheme'], $this->uri['host'], $this->getDBnameFromURI());
+    parent::__construct($dns, $this->uri['user'], array_key_exists('pass', $this->uri) ? $this->uri['pass'] : null);
   }
 
   private function getDBnameFromURI() {
@@ -21,8 +21,9 @@ class BasePdo extends PDO {
     $cols = [];
     $values = [];
     foreach($columns as $column_name => $value) {
+      if($this->isBlank($column_name) || $this->isBlank($value)) { continue; }
       array_push($cols, $column_name);
-      array_push($values, (gettype($value) == "string") ? $this->quote($value) : $value);
+      array_push($values, $this->quote($value));
     }
     $statement = $this->prepare("INSERT INTO $table_name (".implode(',', $cols).") VALUES (".implode(',', $values).")");
     return $statement->execute();
@@ -31,6 +32,10 @@ class BasePdo extends PDO {
   public function cleanTable($table_name) {
     $statement = $this->prepare("TRUNCATE TABLE :table_name");
     return $statement->execute([':table_name' => $table_name]);
+  }
+
+  private function isBlank($string) {
+    return empty($string) || is_null($string);
   }
 }
 ?>

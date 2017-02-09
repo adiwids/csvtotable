@@ -13,8 +13,11 @@
   requireFileInDirectory('./connection');
 
   class CsvToTable {
-    const SUPPORTED_DRIVERS = ['mysql' => 'CsvToTable\Connection\Mysql'];
-    const DELIMITER = ['col' => ',', 'row' => ';'];
+    const SUPPORTED_DRIVERS = [
+      'mysql' => 'CsvToTable\Connection\Mysql',
+      'pgsql' => 'CsvTOTable\Connection\Pgsql'
+    ];
+    const DELIMITER = ['col' => ',', 'row' => "\n"];
 
     private $source;
     private $source_path;
@@ -185,7 +188,10 @@
           $row[$header[$i]] = $data[$i];
           $i++;
         }
-        array_push($this->content, $row);
+
+        if(count($row) == count($header)) {
+          array_push($this->content, $row);
+        }
       }
     }
 

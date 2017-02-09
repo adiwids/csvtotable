@@ -84,5 +84,14 @@ class CsvToTableTest extends TestCase {
     $csvtotable = new CsvToTable($this->options);
     $this->assertEquals(count($csvtotable->getContent()), $csvtotable->import());
   }
+
+  public function testImportDataToPostgreSQLTestTable() {
+    $_options = $this->options;
+    unset($_options['connection']['mysql']);
+    $_options['connection']['pgsql'] = "pgsql://postgres:12345678@127.0.0.1:5432/csvtotable_test";
+    $csvtotable = new CsvToTable($_options);
+    $this->assertEquals(count($csvtotable->getContent()), $csvtotable->import());
+  }
+
 }
 ?>
