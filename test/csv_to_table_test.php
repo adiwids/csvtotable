@@ -19,7 +19,7 @@ class CsvToTableTest extends TestCase {
     $this->options = [
       'source' => $this->csv_sample_path,
       'connection' => [
-        'mysql' => 'mysql://root:12345678@127.0.0.1:3306/csvtotable_test'
+        'mysql' => 'mysql://ubuntu@127.0.0.1:3306/csvtotable_test'
       ],
       'table' => [
         'books' => ['number', 'book_title', 'isbn', 'quantity']
@@ -88,7 +88,7 @@ class CsvToTableTest extends TestCase {
   public function testImportDataToPostgreSQLTestTable() {
     $_options = $this->options;
     unset($_options['connection']['mysql']);
-    $_options['connection']['pgsql'] = "pgsql://postgres:12345678@127.0.0.1:5432/csvtotable_test";
+    $_options['connection']['pgsql'] = "pgsql://ubuntu@127.0.0.1:5432/csvtotable_test";
     $csvtotable = new CsvToTable($_options);
     $this->assertEquals(count($csvtotable->getContent()), $csvtotable->import());
   }

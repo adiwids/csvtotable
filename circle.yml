@@ -1,0 +1,15 @@
+machine:
+  php:
+    version: 7.0.4
+database:
+   override:
+     - mysql -u ubuntu -e "DROP DATABASE IF EXISTS csvtotable_test"
+     - mysql -u ubuntu -e "CREATE DATABASE csvtotable_test"
+     - mysql -u ubuntu csvtotable_test < ./test/csvtotable_test.my.sql
+     - psql -U ubuntu -c "DROP DATABASE IF EXISTS csvtotable_test"
+     - psql -U ubuntu -c "CREATE DATABASE csvtotable_test"
+     - psql -U ubuntu csvtotable_test < ./test/csvtotable_test.pg.sql
+test:
+  override:
+    - phpunit test/csv_to_table_test.php
+
